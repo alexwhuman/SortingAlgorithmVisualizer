@@ -11,3 +11,23 @@ function generateRandom(n) {
     }
     return randomArray;
 }
+
+// Selection Sort
+function selectionSort(inputArray) {
+    for (let i = 0; i < inputArray.length; i++) {
+        // Select Action
+        var minimum = i;
+        for (let j = i + 1; j < inputArray.length; j++) {
+            // Compare Action
+            if (inputArray[minimum] > inputArray[j]) {
+                minimum = j;
+            }
+        }
+        if (minimum !== i) {
+            // Swap Action
+            var temp = inputArray[i];
+            inputArray[i] = inputArray[minimum];
+            inputArray[minimum] = temp;
+        }
+    }
+}
