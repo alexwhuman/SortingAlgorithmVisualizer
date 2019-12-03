@@ -32,10 +32,12 @@ window.onload = () => {
 
     var barSlider = document.getElementById("numBars");
     var barContainer = document.getElementById("Bars");
+    var barCounter = document.getElementById("barCounter");
 
     // Setting number of bars on page based on slider
     barSlider.addEventListener("change", () => {
         var barCount = barSlider.value;
+        barCounter.innerText = barCount;
         var lengths = generateRandom(barCount);
         while (barContainer.firstChild) {
             barContainer.removeChild(barContainer.firstChild);
