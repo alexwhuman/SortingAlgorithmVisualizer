@@ -31,3 +31,25 @@ function selectionSort(inputArray) {
         }
     }
 }
+
+window.onload = () => {
+
+    var barSlider = document.getElementById("numBars");
+    var barContainer = document.getElementById("Bars");
+
+    // Setting number of bars on page based on slider
+    barSlider.addEventListener("change", () => {
+        var barCount = barSlider.value;
+        var lengths = generateRandom(barCount);
+        while (barContainer.firstChild) {
+            barContainer.removeChild(barContainer.firstChild);
+        }
+
+        for (let index = 0; index < barCount; index++) {
+            var bar = document.createElement("div");
+            bar.classList.add("bar");
+            bar.style.height = generateRandom() + "%";
+            barContainer.appendChild(bar);
+        }
+    });
+}
