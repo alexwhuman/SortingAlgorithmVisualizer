@@ -8,6 +8,11 @@ function generateRandom() {
     return randomNumber;
 }
 
+// Converting from percentages to numbers
+function convertPercentageToInt(percentage) {
+    return parseInt(percentage.substring(0, percentage.length - 1));
+}
+
 // Selection Sort
 function selectionSort(inputArray) {
     for (let i = 0; i < inputArray.length; i++) {
@@ -15,15 +20,15 @@ function selectionSort(inputArray) {
         var minimum = i;
         for (let j = i + 1; j < inputArray.length; j++) {
             // Compare Action
-            if (inputArray[minimum] > inputArray[j]) {
+            if (convertPercentageToInt(inputArray[minimum].style.height) > convertPercentageToInt(inputArray[j].style.height)) {
                 minimum = j;
             }
         }
         if (minimum !== i) {
             // Swap Action
-            var temp = inputArray[i];
-            inputArray[i] = inputArray[minimum];
-            inputArray[minimum] = temp;
+            var temp = inputArray[i].style.height;
+            inputArray[i].style.height = inputArray[minimum].style.height;
+            inputArray[minimum].style.height = temp;
         }
     }
 }
@@ -33,13 +38,13 @@ window.onload = () => {
     var barSlider = document.getElementById("numBars");
     var barContainer = document.getElementById("Bars");
     var barCounter = document.getElementById("barCounter");
+    var barArray = document.getElementsByClassName("bar");
 
     // Setting initial number of bars
     barCounter.innerText = 50;
     for (let i = 0; i < 50; i++) {
         var bar = document.createElement("div");
         bar.classList.add("bar");
-        bar.classList.add("bar-selected-1");
         bar.style.height = generateRandom() + "%";
         barContainer.appendChild(bar);
     }
@@ -59,5 +64,13 @@ window.onload = () => {
             bar.style.height = generateRandom() + "%";
             barContainer.appendChild(bar);
         }
+
+        barArray = document.getElementsByClassName("bar");
+    });
+
+    // Clicking "Sort" button
+    var sortButton = document.getElementById("Sort");
+    sortButton.addEventListener("click", () => {
+        selectionSort(barArray);
     });
 }
