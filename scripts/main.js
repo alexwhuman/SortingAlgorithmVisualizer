@@ -15,14 +15,17 @@ function convertPercentageToInt(percentage) {
 
 // Selection Sort
 function selectionSort(inputArray) {
-    for (let i = 0; i < inputArray.length; i++) {
+    var i = 0;
+    while (i < inputArray.length) {
         // Select Action
         var minimum = i;
-        for (let j = i + 1; j < inputArray.length; j++) {
+        var j = i + 1;
+        while (j < inputArray.length) {
             // Compare Action
             if (convertPercentageToInt(inputArray[minimum].style.height) > convertPercentageToInt(inputArray[j].style.height)) {
                 minimum = j;
             }
+            j++;
         }
         if (minimum !== i) {
             // Swap Action
@@ -30,6 +33,7 @@ function selectionSort(inputArray) {
             inputArray[i].style.height = inputArray[minimum].style.height;
             inputArray[minimum].style.height = temp;
         }
+        i++;
     }
 }
 
