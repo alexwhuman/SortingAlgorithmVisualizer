@@ -52,10 +52,36 @@ body,html {
 }
 
 .bar {
+    position: relative;
     min-width: 5px;
     background-color: var(--white);
     flex-grow: 1;
     margin: 0 2px 0 0;
+    display: flex;
+    justify-content: center;
+}
+
+.bar-selected-1:after, 
+.bar-selected-2:after {
+    position: absolute;
+    border: 2px solid red;
+    min-width: 5px;
+    min-height: 5px;
+    border-width: 0 2px 2px 0;
+    flex-grow: 1;
+    content: '';
+}
+
+.bar-selected-1:after {
+    top: 100%;
+    margin: 5px 0 0 0;
+    transform: rotate(225deg);
+}
+
+.bar-selected-2:after {
+    top: 0;
+    margin: -10px 0 0 0;
+    transform: rotate(45deg);
 }
 
 .bar:last-of-type {

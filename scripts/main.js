@@ -34,6 +34,16 @@ window.onload = () => {
     var barContainer = document.getElementById("Bars");
     var barCounter = document.getElementById("barCounter");
 
+    // Setting initial number of bars
+    barCounter.innerText = 50;
+    for (let i = 0; i < 50; i++) {
+        var bar = document.createElement("div");
+        bar.classList.add("bar");
+        bar.classList.add("bar-selected-1");
+        bar.style.height = generateRandom() + "%";
+        barContainer.appendChild(bar);
+    }
+
     // Setting number of bars on page based on slider
     barSlider.addEventListener("change", () => {
         var barCount = barSlider.value;
