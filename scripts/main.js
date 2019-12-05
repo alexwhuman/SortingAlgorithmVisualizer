@@ -44,7 +44,22 @@ function unswap(element) {
 }
 
 // Setting default sort algorithm
-var algorithm = "Selection Sort";
+
+// Function to decide which algorithm to run
+function sort(algorithm, barArray, numBars) {
+    switch (algorithm) {
+        case "Selection Sort":
+            selectionSort(barArray, numBars);
+            break;
+
+        case "Bubble Sort":
+
+            break;
+
+        default:
+            break;
+    }
+}
 
 // Selection Sort
 function selectionSort(inputArray, numBars) {
@@ -109,7 +124,7 @@ window.onload = () => {
     var algorithmButtonArray = [selectionSortButton, BubbleSortButton];
 
     // Setting default algorithm
-    algorithmSelected.innerText = algorithm;
+    algorithmSelected.innerText = "Selection Sort";
 
     // Setting initial number of bars
     barCounter.innerText = 50;
@@ -141,15 +156,14 @@ window.onload = () => {
     // Changing sorting method
     for (let i = 0; i < algorithmButtonArray.length; i++) {
         algorithmButtonArray[i].addEventListener("click", () => {
-            algorithm = algorithmButtonArray[i].innerText;
-            algorithmSelected.innerText = algorithm;
+            algorithmSelected.innerText = algorithmButtonArray[i].innerText;
         });
     }
 
     // Clicking "Sort" button
     var sortButton = document.getElementById("Sort");
     sortButton.addEventListener("click", () => {
-        selectionSort(barArray, barArray.length);
+        sort(algorithmSelected.innerText, barArray, barArray.length);
     });
 
 
