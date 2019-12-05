@@ -13,28 +13,85 @@ function convertPercentageToInt(percentage) {
     return parseInt(percentage.substring(0, percentage.length - 1));
 }
 
+// Selection Animation
+function select(element) {
+    element.classList.add("bar-selected-1");
+}
+
+// Deselecting Animation 
+function deselect(element) {
+    element.classList.remove("bar-selected-1");
+}
+
+// Comparison Animation
+function compare(element) {
+    element.classList.add("bar-selected-2");
+}
+
+// Uncompare Animation
+function uncompare(element) {
+    element.classList.remove("bar-selected-2");
+}
+
+// Swap Animation
+function swap(element) {
+    element.classList.add("bar-selected-3");
+}
+
+// Unswap Animation
+function unswap(element) {
+    element.classList.remove("bar-selected-3");
+}
+
 // Selection Sort
-function selectionSort(inputArray) {
+function selectionSort(inputArray, numBars) {
     var i = 0;
-    while (i < inputArray.length) {
-        // Select Action
-        var minimum = i;
-        var j = i + 1;
-        while (j < inputArray.length) {
-            // Compare Action
-            if (convertPercentageToInt(inputArray[minimum].style.height) > convertPercentageToInt(inputArray[j].style.height)) {
-                minimum = j;
+    var intervalID = setInterval(() => {
+        if (i < inputArray.length) {
+            // Select Action
+            if (i !== 0) {
+                deselect(inputArray[i - 1]);
             }
-            j++;
+
+            select(inputArray[i]);
+            var minimum = i;
+            var j = i + 1;
+            var innerIntervalID = setInterval(() => {
+                if (j < inputArray.length) {
+                    // Compare Action
+                    uncompare(inputArray[j - 1]);
+                    compare(inputArray[j]);
+                    if (convertPercentageToInt(inputArray[minimum].style.height) > convertPercentageToInt(inputArray[j].style.height)) {
+                        unswap(inputArray[minimum]);
+                        minimum = j;
+                        swap(inputArray[minimum]);
+                    }
+                }
+                else {
+                    uncompare(inputArray[j - 1]);
+                    clearInterval(innerIntervalID);
+                }
+                j++;
+            }, (200 / numBars) - 1);
+            setTimeout(() => {
+                if (minimum !== i) {
+                    // Swap Action
+                    var temp = inputArray[i].style.height;
+                    inputArray[i].style.height = inputArray[minimum].style.height;
+                    inputArray[minimum].style.height = temp;
+                    unswap(inputArray[minimum]);
+                    swap(inputArray[i]);
+                }
+                setTimeout(() => {
+                    unswap(inputArray[i - 1]);
+                }, 300);
+                i++;
+            }, 500);
+        } else {
+            deselect(inputArray[i - 1]);
+            clearInterval(intervalID);
         }
-        if (minimum !== i) {
-            // Swap Action
-            var temp = inputArray[i].style.height;
-            inputArray[i].style.height = inputArray[minimum].style.height;
-            inputArray[minimum].style.height = temp;
-        }
-        i++;
-    }
+    }, 1000);
 }
 
 window.onload = () => {
@@ -57,7 +114,6 @@ window.onload = () => {
     barSlider.addEventListener("change", () => {
         var barCount = barSlider.value;
         barCounter.innerText = barCount;
-        var lengths = generateRandom(barCount);
         while (barContainer.firstChild) {
             barContainer.removeChild(barContainer.firstChild);
         }
@@ -75,6 +131,6 @@ window.onload = () => {
     // Clicking "Sort" button
     var sortButton = document.getElementById("Sort");
     sortButton.addEventListener("click", () => {
-        selectionSort(barArray);
+        selectionSort(barArray, barArray.length);
     });
 }
