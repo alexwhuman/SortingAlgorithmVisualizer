@@ -46,10 +46,10 @@ function unswap(element) {
 // Setting default sort algorithm
 
 // Function to decide which algorithm to run
-function sort(algorithm, barArray, numBars) {
+function sort(algorithm, barArray, numBars, barSlider) {
     switch (algorithm) {
         case "Selection Sort":
-            selectionSort(barArray, numBars);
+            selectionSort(barArray, numBars, barSlider);
             break;
 
         case "Bubble Sort":
@@ -62,7 +62,9 @@ function sort(algorithm, barArray, numBars) {
 }
 
 // Selection Sort
-function selectionSort(inputArray, numBars) {
+function selectionSort(inputArray, numBars, barSlider) {
+    barSlider.disabled = true;
+    barSlider.classList.add("slider-disabled");
     var i = 0;
     var intervalID = setInterval(() => {
         if (i < inputArray.length) {
@@ -108,6 +110,8 @@ function selectionSort(inputArray, numBars) {
         } else {
             deselect(inputArray[i - 1]);
             clearInterval(intervalID);
+            barSlider.disabled = false;
+            barSlider.classList.remove("slider-disabled");
         }
     }, 1000);
 }
@@ -163,8 +167,26 @@ window.onload = () => {
     // Clicking "Sort" button
     var sortButton = document.getElementById("Sort");
     sortButton.addEventListener("click", () => {
-        sort(algorithmSelected.innerText, barArray, barArray.length);
+        sort(algorithmSelected.innerText, barArray, barArray.length, barSlider);
     });
+
+    // Clicking "Stop" button
+    var stopButton = document.getElementById("Stop");
+    stopButton.addEventListener("click", () => {
+        for (let index = 0; index < 1000; index++) {
+            clearInterval(index);
+            clearTimeout(index);
+        }
+        for (let index = 0; index < barArray.length; index++) {
+            const element = barArray[index];
+            element.classList.remove("bar-selected-1");
+            element.classList.remove("bar-selected-2");
+            element.classList.remove("bar-selected-3");
+        }
+        barSlider.disabled = false;
+        barSlider.classList.remove("slider-disabled");
+
+    })
 
 
 }

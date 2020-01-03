@@ -160,6 +160,10 @@ body,html {
     margin: 0;
 }
 
+.slider-disabled::-webkit-slider-thumb {
+    background: #808080 !important;
+}
+
 
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none; 
